@@ -75,7 +75,7 @@ app.post("/updateDatabase", async (req, res) => {
 
     let response;
 
-   fs.writeFile(`./json-tables/queue.json`, dataAsString, (err) => {
+    fs.writeFile(`./json-tables/queue.json`, dataAsString, (err) => {
         if (err) {
             // console.log(err);
             response = err;
