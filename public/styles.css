@@ -1,0 +1,34 @@
+#main {
+    display: flex;
+    flex-direction: row;
+}
+
+#add-a-project {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    column-gap: 5%;
+    margin: 8px 10px;
+}
+
+.full {
+    display: flex;
+    flex-direction: column;
+}
+
+.half {
+    display: flex;
+    flex-direction: column;
+    width: 47.5%;
+}
+
+.third {
+    display: flex;
+    flex-direction: column;
+    width: 31.66%;
+}

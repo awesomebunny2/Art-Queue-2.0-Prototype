@@ -1,0 +1,9 @@
+GET http://localhost:5001/getData
+
+###
+POST http://localhost:5001/doSomething
+Content-Type: application/json
+
+{
+    "number": 1
+}

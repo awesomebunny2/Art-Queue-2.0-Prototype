@@ -1,0 +1,8 @@
+[
+    {"uid":7, "jobID": 1, "client":"Todd's Fries", "progress":12, "status":"At Client", "priority":6, "color":"red", "date":"03/02/2024", "bold":1},
+    {"uid":8, "jobID": 2, "client":"Pizza Tent", "progress":1, "status":"Not Started", "priority":3, "color":"blue", "date":"01/12/2024", "bold":true},
+    {"uid":9, "jobID": 3, "client":"Fart Priest 69's Exotic Smells", "progress":42, "status":"Working", "priority":1, "color":"green", "date":"12/25/2023", "bold":"true"},
+    {"uid":10, "jobID": 4, "client":"Dr. Scranton's Peanut Butter & Jelly Clinic", "progress":100, "status":"Working", "priority":2, "color":"orange", "date":"2/7/2024"},
+    {"uid":11, "jobID": 5, "client":"AAAAAAH: Attorney's At Law", "progress":16, "status":"Completed", "priority":4, "color":"yellow", "date":"04/01/2024"},
+    {"uid":12, "jobID": 6, "client":"Lick a Flute: Instrument Repair", "progress":38, "status":"On Hold", "priority":5, "color":"red", "date":"11/08/1984", "bold":1}
+]

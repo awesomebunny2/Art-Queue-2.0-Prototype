@@ -1,0 +1,8 @@
+[
+    {"uid":1, "jobID": 1, "client":"Pika Pizza", "progress":12, "status":"Working", "priority":1, "color":"red", "date":"2024-03-02T12:15:55.624-04:00", "bold":1},
+    {"uid":2, "jobID": 2, "client":"Super Pizza Bros", "progress":1, "status":"Not Started", "priority":2, "color":"blue", "date":"2024-01-12T17:25:25.125-04:00", "bold":true},
+    {"uid":3, "jobID": 3, "client":"Crunchy Chicken Soda", "progress":42, "status":"Completed", "priority":0, "color":"green", "date":"2023-12-25T16:12:42.562-04:00", "bold":"true"},
+    {"uid":4, "jobID": 4, "client":"Mr. MaGee's Meat's & Cheese", "progress":100, "status":"On Hold", "priority":1, "color":"orange", "date":"2024-02-07T09:46:12.002-04:00"},
+    {"uid":5, "jobID": 5, "client":"Dr. Mario's Alztimers Clinic", "progress":16, "status":"At Client", "priority":5, "color":"yellow", "date":"2024-04-01T08:32:32.032-04:00"},
+    {"uid":6, "jobID": 6, "client":"The Apple of Abe Lincoln's Eye", "progress":38, "status":"Not Started", "priority":4, "color":"red", "date":"1984-11-08T23:59:59.999-04:00", "bold":1}
+]
