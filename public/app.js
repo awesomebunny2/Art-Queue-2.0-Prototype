@@ -75,39 +75,39 @@ const artistTable = (function() {
     };
     
 
-    table.on("cellEdited", async function(cell) {
+    // table.on("cellEdited", async function(cell) {
 
-        let rowUID = cell.getData().UID;
-        let field = cell.getField();
-        let changedValue = cell.getValue();
+    //     let rowUID = cell.getData().UID;
+    //     let field = cell.getField();
+    //     let changedValue = cell.getValue();
 
 
-        //need to get UID of the changed row as well as the column of the changed value, and the changed value
+    //     //need to get UID of the changed row as well as the column of the changed value, and the changed value
         
-        //builds out the POST request object
-        let packet = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                "rowUID": rowUID,
-                "field": field,
-                "value": changedValue
-            })
-        };
+    //     //builds out the POST request object
+    //     let packet = {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json"
+    //         },
+    //         body: JSON.stringify({
+    //             "rowUID": rowUID,
+    //             "field": field,
+    //             "value": changedValue
+    //         })
+    //     };
 
-        //call the getData function from the server with the packet obj as passed variable
-        let response = await fetch("/getArtistJSON", packet);
-        let tableData = await response.json(); //await the response
+    //     //call the getData function from the server with the packet obj as passed variable
+    //     let response = await fetch("/getArtistJSON", packet);
+    //     let tableData = await response.json(); //await the response
 
 
-        //* LEFT OFF RIGHT HERE
-        //* Documentation on what all I can do with the cell component
-        //? https://tabulator.info/docs/6.2/components#component-cell
+    //     //* LEFT OFF RIGHT HERE
+    //     //* Documentation on what all I can do with the cell component
+    //     //? https://tabulator.info/docs/6.2/components#component-cell
         
-        console.log(`The updated data in the artist table was the following: ${cell}`);
-    });
+    //     console.log(`The updated data in the artist table was the following: ${cell}`);
+    // });
 
 
     // Publicly exposed methods
@@ -154,8 +154,8 @@ $("#submit-btn").on("click", async() => {
     let allData = await fetch("/getAllData");
     let allTableData = await allData.json();
 
-    console.log(`The queue data is as follows:`);
-    console.log(allTableData);
+    // console.log(`The queue data is as follows:`);
+    // console.log(allTableData);
 
     const UID = allTableData.map(obj => obj["uid"]);
 
@@ -202,16 +202,12 @@ $("#submit-btn").on("click", async() => {
 
     artistTable.addData(addToData);
 
-    // let element = document.getElementById("add-project-form");
-
-    // element.reset();
-
     $("#add-project-form").trigger("reset");
 
     const newTableArr = allTableData.concat(addToData);
 
-    console.log("allTableData after adding the new data:");
-    console.log(newTableArr);
+    // console.log("allTableData after adding the new data:");
+    // console.log(newTableArr);
 
         //builds out the POST request object
         let newQueue = {
@@ -226,9 +222,21 @@ $("#submit-btn").on("click", async() => {
     
         //call the getData function from the server with the packet obj as passed variable
         let sendNewData = await fetch("/updateDatabase", newQueue);
-        let serverResponse = await sendNewData.json(); //await the response
 
-        console.log(serverResponse);
+        if (sendNewData.ok) {
+            let responseData = await sendNewData.json();
+            console.log(responseData.message)
+        } else {
+            let responseData = await sendNewData.json();
+            console.log(sendNewData);
+            alert(`The server sent back a ${sendNewData.status} error with the following message: \n${responseData.message}`);
+        }
+        // console.log("SEND NEW DATA:", sendNewData)
+        // let newDataResponse = await sendNewData; //await the response
+
+        // console.log(newDataResponse)
+        // let serverResponse = await sendNewData.json(); //await the response
+        // console.log(serverResponse);
 
 })
 
@@ -382,9 +390,7 @@ function buildArtistTabulator() {
                         let result = allTableData.find(({ uid }) => uid === rowId);
             
                         allTableData = allTableData.filter( el => el.uid !== rowId );
-            
-                        console.log(allTableData);
-                                        
+                                                    
                         row.delete();
 
                         //builds out the POST request object
@@ -400,9 +406,15 @@ function buildArtistTabulator() {
                     
                         //call the getData function from the server with the packet obj as passed variable
                         let sendNewData = await fetch("/updateDatabase", newQueue);
-                        let serverResponse = await sendNewData.json(); //await the response
 
-                        console.log(serverResponse);
+                        if (sendNewData.ok) {
+                            let responseData = await sendNewData.json();
+                            console.log(responseData.message)
+                        } else {
+                            let responseData = await sendNewData.json();
+                            console.log(sendNewData);
+                            alert(`The server sent back a ${sendNewData.status} error with the following message: \n${responseData.message}`);
+                        };
 
 
                     } catch(err) {
@@ -426,48 +438,65 @@ function buildArtistTabulator() {
         // data: ([{"UID":0, "Job ID": 0, "Client":"PLACEHOLDER", "Progress":0, "Status":"", "Priority":"", "Color":"red", "Date":"", "Bold":0}])
     });
 
-    return table;
-}
+    table.on("cellEdited", async(cell) => {
+
+        const newValue = cell.getValue();
+        const rowId = cell.getData().uid;
+        const header =  cell.getField();
 
 
-// async function deleteData(_event, cell) {
-//     const rowId = cell.getRow().getData().uid;
-//     const rowName = cell.getRow().getData().client;
-//     const rowIndex = cell.getRow().getIndex();
-
-//     let doDelete;
-
-//     if (rowName == null) {
-//         doDelete = confirm(`Are you sure you want to delete this row?`);
-//     } else {
-//         doDelete = confirm(`Are you sure you want to delete ${rowName}'s row?`);
-//     };
-
-//     // const doDelete = confirm(`Are you sure you want to delete ${rowName ? rowName : "this"}'s row?`);
-//     if (doDelete) {
-//         // await window.api.removeFromDatabase(rowId);
-
-//         try {
-
-//             const allData = await fetch("/getAllData");
-//             const allTableData = await allData.json();
-    
-//             let result = allTableData.find(({ uid }) => uid === rowId);
-
-//             allTableData = allTableData.filter( el => el.uid !== rowId );
-
-//             console.log(allTableData);
-    
-//             //! Need to remove row from database here
+        try {
             
-//             table.deleteRow(rowIndex);
-//             // console.log(rowId);
-//         } catch(err) {
+            const allData = await fetch("/getAllData");
+            let allTableData = await allData.json();
+    
+            let rowData = allTableData.find(({ uid }) => uid === rowId);
 
-//             console.log(err);
+            rowData[header] = newValue;
 
-//         };
-  
-//     };
+            
 
-// }
+            // allTableData = allTableData.filter( el => el.uid !== rowId );
+
+            console.log(allTableData);
+                            
+
+            //builds out the POST request object
+            let newQueue = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    "queue": allTableData
+                })
+            };
+        
+            //call the getData function from the server with the packet obj as passed variable
+            let sendNewData = await fetch("/updateDatabase", newQueue);
+
+            if (sendNewData.ok) {
+                let responseData = await sendNewData.json();
+                console.log(responseData.message)
+            } else {
+                let responseData = await sendNewData.json();
+                console.log(sendNewData);
+                alert(`The server sent back a ${sendNewData.status} error with the following message: \n${responseData.message}`);
+            };
+
+        } catch(err) {
+
+            console.log(err);
+
+        };
+
+        // const cellData = {
+        //     "rowId": rowId,
+        //     "field": header,
+        //     "value": newValue
+        // }
+        // console.table(cellData);
+    });
+
+    return table;
+};

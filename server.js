@@ -67,31 +67,26 @@ app.post('/getArtistData', async (req, res) => {
 
 
 
-app.post("/updateDatabase", async (req, res) => {
+app.post("/updateDatabase", (req, res) => {
 
-    let data = req.body;
 
-    let dataAsString = JSON.stringify(data.queue);
+        let data = req.body;
 
-    let response;
+        let dataAsString = JSON.stringify(data.queue);
 
-    fs.writeFile(`./json-tables/queue.json`, dataAsString, (err) => {
-        if (err) {
-            // console.log(err);
-            response = err;
-        } else {
-            // console.log("File written successfully");
-            response = "File written successfully";
+        try {
+            fs.writeFileSync(`./json-tables/queue.json`, dataAsString)
+            console.log("Wrote the file.")
+     
+            res.status(200).json({
+                "message": "Database updated successfully!"
+            });
+        } catch (e) {
+            console.log("Chicken nuggets", e);
+            res.status(500).json({
+                "message": e
+            })
         }
-    })
-
-    //? I can't get this response to not be undefined
-    console.log(response);
-
-
-    //? This also doesn't work
-    res = response;
-
     
 })
 
