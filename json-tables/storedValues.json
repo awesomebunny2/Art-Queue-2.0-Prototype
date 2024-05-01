@@ -1,3 +1,5 @@
 [{
-    "artists": ["Matt", "Todd", "Danny"]
+    "artists": ["Matt", "Todd", "Danny"],
+    "statuses": ["Not Started", "Working", "At Client", "On Hold", "Completed", "Cancelled"],
+    "colors": ["Red", "Blue", "Green", "Orange", "Yellow", "Purple"]
 }]

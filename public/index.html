@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
+
     <link href="/lib/tabulator_bulma.css" rel="stylesheet" />
     <link href="styles.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
 
 
     <script src="/lib/jquery-3.7.1.min.js" type="text/javascript"></script>
@@ -37,65 +40,71 @@
         <form id="add-project-form">
 
             <div id="add-a-project">
-                <h3>Add A Project</h3>
+
+                <div id="add-project-header">
+                    <div id="add-project-icon">
+                        <i class="fa-solid fa-square-plus"></i>
+                    </div>
+                    <h3 class="custom-header">Add A Project</h3>
+                </div>
 
                 <input type="hidden" id="artist-hidden" name="artist">
 
                 <span class="row full">
-                    <label for ="client">Client</label>
-                    <input id="client" name="client">
+                    <div class="input-group">
+                        <input id="client" required class="input-area full-width" name="client">
+                        <label for="client" class="input-label unselectable">Client</label>
+                    </div>
                 </span>
            
        
     
                 <span class="row">
                     <span class="half">
-                        <label for="progress">Progress</label>
-                        <input type="number" id="progress" name="progress" min="0" max="100">
+                        <div class="input-group">
+                            <input type="number" id="priority" name="priority" min="1" required class="full-width input-area">
+                            <label for="priority" class="input-label unselectable">Priority</label>
+                        </div>
+           
                     </span>
     
                     <span class="half">
-                        <label for="status">Status</label>
-                        <select id="status" name="status">
-                            <option value="Working">Working</option>
-                            <option value="At Client">At Client</option>
-                            <option value="On Hold">On Hold</option>
-                            <option value="Not Started" selected="selected">Not Started</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
+                        <div class="input-group">
+                            <select id="status" required class="sel input-select" name="status">
+                                <option></option>
+                            </select>
+                            <label for="status" class="input-label unselectable">Status</label>
+                        </div>
+                        
                     </span>
                 </span>
     
-                <span class="row">
-                    <span class="third">
-                        <label for="priority">Priority</label>
-                        <input type="number" id="priority" name="priority" min="1">
+                <span class="row">    
+                    <span class="half">
+                        <div class="input-group">
+                            <select id="color" name="color" required class="sel input-select">
+                                <option></option>
+                                <!-- <option value="red">Red</option>
+                                <option value="blue" selected="selected">Blue</option>
+                                <option value="green">Green</option>
+                                <option value="orange">Orange</option>
+                                <option value="yellow">Yellow</option>
+                                <option value="purple">Purple</option> -->
+                            </select>
+                            <label for="color" class="input-label unselectable">Color</label>
+                        </div>
                     </span>
-    
-                    <span class="third">
-                        <label for="color">Color</label>
-                        <!-- <input type="color" id="color" name="color" value="#FF2600"> -->
-                        <select id="color" name="color">
-                            <option value="red">Red</option>
-                            <option value="blue" selected="selected">Blue</option>
-                            <option value="green">Green</option>
-                            <option value="orange">Orange</option>
-                            <option value="yellow">Yellow</option>
-                            <option value="purple">Purple</option>
-                        </select>
+
+                    <span class="half">
+                        <div class="input-group">
+                            <input id="date" required class="full-width input-area" name="date">
+                            <label for="date" class="input-label unselectable">Date & Time</label>
+                        </div>
                     </span>
-    
-                    <span class="third" style="flex-direction: row; align-self: flex-end;">
-                        <input type="checkbox" id="bold" name="bold" value="true">
-                        <label for="bold">Bold</label>
-                    </span>
+                        
                 </span>
     
-                <span class="row full">
-                    <label for="date">Date & Time</label>
-                    <input id="date" name="date">
-                </span>
+      
                 
     
     

@@ -63,7 +63,6 @@ $(async() => {
     let storedValuesResponse = await fetch("/getStoredValues");
     let storedValues = await storedValuesResponse.json(); //await the response
 
-    // artistTable(storedValues);
 
     //initialize table
     buildArtistTabulator(storedValues);
@@ -71,33 +70,42 @@ $(async() => {
     //load in the artist data
     getArtistTable();
     passArtistValue();
-    updateArtistSelect();
-
+    updateTaskpaneElements(storedValues);
 
 
 });
 
 
-async function updateArtistSelect() {
+function updateTaskpaneElements(storedValues) {
 
     $("#artist-select").empty();
+    $("#status").empty();
+    $("#color").empty();
 
-    //call the getData function from the server with the packet obj as passed variable
-    let response = await fetch("/getStoredValues");
-    let storedValues = await response.json(); //await the response
-    storedValues = storedValues[0];
-     
+    createOptions(storedValues[0].artists, "#artist-select");
 
 
-    for (let artist of storedValues.artists) {
-        let element = document.createElement("option");
-        element.textContent = artist;
-        element.value = artist;
-        $("#artist-select").append(element);
+    $("#status").append($("<option disabled selected hidden></option>").val("").text(""));
+    createOptions(storedValues[0].statuses, "#status");
+
+
+    $("#color").append($("<option disabled selected hidden></option>").val("").text(""));
+    createOptions(storedValues[0].colors, "#color");
+
+
+
+
+    function createOptions(arr, element) {
+        for (let item of arr) {
+            let option = `<option value="${item}">${item}</option>`;
+            $(element).append(option);
+        };
     };
+    
 
-    console.log("Artist select is built!")
-}
+};
+
+
 
 
 
@@ -174,8 +182,6 @@ $("#submit-btn").on("click", async() => {
 
     const newTableArr = allTableData.concat(addToData);
 
-    // console.log("allTableData after adding the new data:");
-    // console.log(newTableArr);
 
         //builds out the POST request object
         let newQueue = {
@@ -199,12 +205,6 @@ $("#submit-btn").on("click", async() => {
             console.log(sendNewData);
             alert(`The server sent back a ${sendNewData.status} error with the following message: \n${responseData.message}`);
         }
-        // console.log("SEND NEW DATA:", sendNewData)
-        // let newDataResponse = await sendNewData; //await the response
-
-        // console.log(newDataResponse)
-        // let serverResponse = await sendNewData.json(); //await the response
-        // console.log(serverResponse);
 
 })
 
@@ -272,17 +272,17 @@ function buildArtistTabulator(storedValues) {
     };
 
     let statuses = {
-        values: [ "Not Started", "Working", "At Client", "On Hold", "Completed", "Cancelled" ]
+        values: []
     };
+
+    for (let status of storedValues[0].statuses) {
+        statuses.values.push(status);
+    }
 
     let priorityParams = {
         min: 1,
         selectContents:true
     }
-
-    let boldParams = {
-        tristate: false,
-    };
 
     let artistList = {
         values: []
@@ -292,9 +292,16 @@ function buildArtistTabulator(storedValues) {
         artistList.values.push(artist);
     }
 
-    // let dateParams = {
-    //     format: "MM/dd/yy hh:mm:ss a"
-    // }
+    let colors = {
+        values: []
+    }
+
+    for (let color of storedValues[0].colors) {
+        colors.values.push(color);
+    }
+
+
+
 
     const table = new Tabulator("#example-table", {
         // autoColumns:true, //create columns from data field names
@@ -360,18 +367,15 @@ function buildArtistTabulator(storedValues) {
               
                 };
             }},
-            { field: "uid", title: "UID" },
-            { field: "jobID", title: "Job ID" },
+            { field: "uid", title: "UID", visible: false },
+            { field: "jobID", title: "Job ID", visible: false },
             { field: "client", title: "Client", editor: "input", editorParams: inputParams },
-            { field: "progress", title: "Progress", sorter: "number", formatter: "progress", hozAlign: "left", editor: false },
             { field: "status", title: "Status", editor: "list", editorParams: statuses },
             { field: "priority", title: "Priority", editor: "number", editorParams: priorityParams },
-            { field: "color", title: "Color"},
+            { field: "color", title: "Color", editor: "list", editorParams: colors },
             { field: "date", title: "Date", editor: dateEditor },
-            { field: "bold", title: "Bold", formatter: "tickCross", editor: true, editorParams: boldParams },
             { field: "artist", title: "Artist", editor: "list", editorParams: artistList }
         ]
-        // data: ([{"UID":0, "Job ID": 0, "Client":"PLACEHOLDER", "Progress":0, "Status":"", "Priority":"", "Color":"red", "Date":"", "Bold":0}])
     });
 
     table.on("cellEdited", async(cell) => {
@@ -430,12 +434,7 @@ function buildArtistTabulator(storedValues) {
 
         };
 
-        // const cellData = {
-        //     "rowId": rowId,
-        //     "field": header,
-        //     "value": newValue
-        // }
-        // console.table(cellData);
+
     });
 
     return table;

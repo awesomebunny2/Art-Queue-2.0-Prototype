@@ -39,6 +39,9 @@ app.get('/getAllData', async (req, res) => {
 
 });
 
+
+
+
 app.post('/getArtistData', async (req, res) => {
 
     let data = req.body;
