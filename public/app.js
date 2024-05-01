@@ -51,87 +51,53 @@ function passArtistValue() {
 
 
 
-/**
- * Builds out the tabulator table and also defines any fucntion that can be used publically to update it. Runs on load.
- */
-const artistTable = (function() {
-
-    //initialize table
-    let table = buildArtistTabulator();
-    
-    //* Silently replaces all data in the table (without updating scroll position, sort or filtering, or triggering popups. 
-    //* However, column count needs to be the same or else it doesn't work)
-    function replaceTableData(data) {
-        table.replaceData(data);
-    }
-
-    //completely resets the table data
-    function setData(data) {
-        table.setData(data);
-    }
-
-    function addData(data) {
-        table.addData(data);
-    };
-    
-
-    // table.on("cellEdited", async function(cell) {
-
-    //     let rowUID = cell.getData().UID;
-    //     let field = cell.getField();
-    //     let changedValue = cell.getValue();
-
-
-    //     //need to get UID of the changed row as well as the column of the changed value, and the changed value
-        
-    //     //builds out the POST request object
-    //     let packet = {
-    //         method: "POST",
-    //         headers: {
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({
-    //             "rowUID": rowUID,
-    //             "field": field,
-    //             "value": changedValue
-    //         })
-    //     };
-
-    //     //call the getData function from the server with the packet obj as passed variable
-    //     let response = await fetch("/getArtistJSON", packet);
-    //     let tableData = await response.json(); //await the response
-
-
-    //     //* LEFT OFF RIGHT HERE
-    //     //* Documentation on what all I can do with the cell component
-    //     //? https://tabulator.info/docs/6.2/components#component-cell
-        
-    //     console.log(`The updated data in the artist table was the following: ${cell}`);
-    // });
-
-
-    // Publicly exposed methods
-    return {
-        replaceTableData: replaceTableData,
-        setData: setData,
-        addData: addData
-    };
-
-})(); //runs this fucntion on load
-    
-
 
 /**
  * On ready, update the artist table to overwrite the placeholder data (since the artistTable module is syncronsis and defined before this function, 
  * everything should work properly)
  */
-$(() => {
+$(async() => {
+
+
+    //call the getData function from the server with the packet obj as passed variable
+    let storedValuesResponse = await fetch("/getStoredValues");
+    let storedValues = await storedValuesResponse.json(); //await the response
+
+    // artistTable(storedValues);
+
+    //initialize table
+    buildArtistTabulator(storedValues);
 
     //load in the artist data
     getArtistTable();
     passArtistValue();
+    updateArtistSelect();
+
+
 
 });
+
+
+async function updateArtistSelect() {
+
+    $("#artist-select").empty();
+
+    //call the getData function from the server with the packet obj as passed variable
+    let response = await fetch("/getStoredValues");
+    let storedValues = await response.json(); //await the response
+    storedValues = storedValues[0];
+     
+
+
+    for (let artist of storedValues.artists) {
+        let element = document.createElement("option");
+        element.textContent = artist;
+        element.value = artist;
+        $("#artist-select").append(element);
+    };
+
+    console.log("Artist select is built!")
+}
 
 
 
@@ -200,6 +166,8 @@ $("#submit-btn").on("click", async() => {
         }
     ];
 
+    let artistTable = Tabulator.findTable("#example-table")[0];
+
     artistTable.addData(addToData);
 
     $("#add-project-form").trigger("reset");
@@ -241,49 +209,6 @@ $("#submit-btn").on("click", async() => {
 })
 
 
-/**
- * Loads the artist table for the selected artist into the provided tabulator table element
- */
-async function getArtistTableSingle() {
-
-    //gets value of artist select box
-    let artistName = $("#artist-select").val();
-
-    //builds out the POST request object
-    let packet = {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            "artist": artistName
-        })
-    };
-
-    //call the getData function from the server with the packet obj as passed variable
-    let response = await fetch("/getArtistJSON", packet);
-    let tableData = await response.json(); //await the response
-
-
-    for (let row of tableData) {
-        let date = new Date(row.date);
-
-        const options = {
-            month: "2-digit", day: "2-digit", year: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'
-        };
-
-        const formatter = new Intl.DateTimeFormat('en-US', options);
-        const formattedDate = formatter.format(date);
-        // console.log(JSON.stringify(date)); //makes date into JSON date format
-
-        row.date = formattedDate;
-    };
-
-    //update table data
-    artistTable.setData(tableData);
-
-};
-
 
 
 /**
@@ -324,6 +249,8 @@ async function getArtistTable() {
         row.date = formattedDate;
     };
 
+    let artistTable = Tabulator.findTable("#example-table")[0];
+
     //update table data
     artistTable.setData(tableData);
 
@@ -337,7 +264,7 @@ async function getArtistTable() {
  * Builds an empty tabulator table to be used as the artist table
  * @returns Built Tabulator Table
  */
-function buildArtistTabulator() {
+function buildArtistTabulator(storedValues) {
 
     let inputParams = {
         search:true,
@@ -355,6 +282,14 @@ function buildArtistTabulator() {
 
     let boldParams = {
         tristate: false,
+    };
+
+    let artistList = {
+        values: []
+    }
+
+    for (let artist of storedValues[0].artists) {
+        artistList.values.push(artist);
     }
 
     // let dateParams = {
@@ -433,7 +368,8 @@ function buildArtistTabulator() {
             { field: "priority", title: "Priority", editor: "number", editorParams: priorityParams },
             { field: "color", title: "Color"},
             { field: "date", title: "Date", editor: dateEditor },
-            { field: "bold", title: "Bold", formatter: "tickCross", editor: true, editorParams: boldParams }
+            { field: "bold", title: "Bold", formatter: "tickCross", editor: true, editorParams: boldParams },
+            { field: "artist", title: "Artist", editor: "list", editorParams: artistList }
         ]
         // data: ([{"UID":0, "Job ID": 0, "Client":"PLACEHOLDER", "Progress":0, "Status":"", "Priority":"", "Color":"red", "Date":"", "Bold":0}])
     });
@@ -483,6 +419,10 @@ function buildArtistTabulator() {
                 console.log(sendNewData);
                 alert(`The server sent back a ${sendNewData.status} error with the following message: \n${responseData.message}`);
             };
+
+            if (header == "artist") {
+                getArtistTable();
+            }
 
         } catch(err) {
 

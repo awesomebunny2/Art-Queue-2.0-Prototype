@@ -64,6 +64,16 @@ app.post('/getArtistData', async (req, res) => {
 
 });
 
+app.get('/getStoredValues', async (req, res) => {
+
+    const response = JSON.parse(fs.readFileSync(`./json-tables/storedValues.json`, "utf8"));
+
+    console.log("Grabbed the data from storedValues.json!");
+
+    res.json(response);
+
+})
+
 
 
 
