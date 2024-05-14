@@ -25,105 +25,184 @@
 </head>
 <body>
 
-    <h1>Art Queue 2.0</h1>
-    <!-- <p>Isn't it beautiful?</p> -->
-    <!-- <button id="get-data">Get Data From Server</button> -->
-    <label for="artist-select">Choose an artist...</label>
-    <select id="artist-select" name="artist">
-        <option value="Matt" selected="selected">Matt</option>
-        <option value="Todd">Todd</option>
-        <option value="Danny">Danny</option>
-    </select>
+
+    <div class="row" style="margin-left: 0;">
+        <div class="nav-div">
+            <div id="spain">
+                <button id="nav-toggle" aria-pressed="false">&#9776;</button>
+            </div>
+        </div>
+     
+
+        <h1 id="title">Art Queue 2.0</h1>
+        <!-- <p>Isn't it beautiful?</p> -->
+        <!-- <button id="get-data">Get Data From Server</button> -->
+    </div>
+
 
     <div id="main">
 
-        <form id="add-project-form">
+     
+      
+        <div class="row">
+            <label for="artist-select">Choose an artist...</label>
+            <select id="artist-select" name="artist">
+                <option value="Matt" selected="selected">Matt</option>
+                <option value="Todd">Todd</option>
+                <option value="Danny">Danny</option>
+            </select>
+        </div>
+  
+    
+        <div id="mySidebar" class="sidebar">
+            <!-- <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a> -->
+            <!-- <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a> -->
 
-            <div id="add-a-project">
+            <div id="add-project-section" class="nav-section full">
 
-                <div id="add-project-header">
-                    <div id="add-project-icon">
-                        <i class="fa-solid fa-square-plus"></i>
+                <div id="add-project-nav-row" class="row-marginless">
+                    <div id="add-project-icon" class="row justify nav-btn">
+                        <!-- <i class="fa-solid fa-square-plus"></i> -->
+                        <button id="add-project-btn" class="nav-square" aria-pressed="false">
+                            <i class="fa-solid fa-plus inside-icon"></i>
+                        </button>
                     </div>
-                    <h3 class="custom-header">Add A Project</h3>
+                    <div id="add-project-text" class="nav-text slide-right">
+                        <h2>Add A Project</h2>
+                    </div>
                 </div>
 
-                <input type="hidden" id="artist-hidden" name="artist">
+                <form id="add-project-form" class="sidebar-form">
 
-                <span class="row full">
-                    <div class="input-group">
-                        <input id="client" required class="input-area full-width" name="client">
-                        <label for="client" class="input-label unselectable">Client</label>
-                    </div>
-                </span>
-           
-       
-    
-                <span class="row">
-                    <span class="half">
-                        <div class="input-group">
-                            <input type="number" id="priority" name="priority" min="1" required class="full-width input-area">
-                            <label for="priority" class="input-label unselectable">Priority</label>
-                        </div>
-           
-                    </span>
-    
-                    <span class="half">
-                        <div class="input-group">
-                            <select id="status" required class="sel input-select" name="status">
-                                <option></option>
-                            </select>
-                            <label for="status" class="input-label unselectable">Status</label>
-                        </div>
-                        
-                    </span>
-                </span>
-    
-                <span class="row">    
-                    <span class="half">
-                        <div class="input-group">
-                            <select id="color" name="color" required class="sel input-select">
-                                <option></option>
-                                <!-- <option value="red">Red</option>
-                                <option value="blue" selected="selected">Blue</option>
-                                <option value="green">Green</option>
-                                <option value="orange">Orange</option>
-                                <option value="yellow">Yellow</option>
-                                <option value="purple">Purple</option> -->
-                            </select>
-                            <label for="color" class="input-label unselectable">Color</label>
-                        </div>
-                    </span>
+                    <div id="add-a-project">
 
-                    <span class="half">
-                        <div class="input-group">
-                            <input id="date" required class="full-width input-area" name="date">
-                            <label for="date" class="input-label unselectable">Date & Time</label>
-                        </div>
-                    </span>
-                        
-                </span>
-    
-      
+                        <!-- <div id="add-project-header">
+                            <div id="add-project-icon">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </div>
+                            <h3 class="custom-header">Add A Project</h3>
+                        </div> -->
+
+                        <input type="hidden" id="artist-hidden" name="artist">
+
+                        <span class="row full">
+                            <div class="input-group">
+                                <input id="client" required class="input-area full-width" name="client">
+                                <label for="client" class="input-label unselectable">Client</label>
+                            </div>
+                        </span>
                 
-    
-    
-                <span class="row">
-                    <span class="half">
-                        <button id="submit-btn" type="button">Submit</button>
-                    </span>
-                    <span class="half">
-                        <input type="reset" value="Clear">
-                    </span>
-                </span>
+            
+            
+                        <span class="row column-gap">
+                            <span class="half">
+                                <div class="input-group">
+                                    <input type="number" id="priority" name="priority" min="1" required class="full-width input-area">
+                                    <label for="priority" class="input-label unselectable">Priority</label>
+                                </div>
+                
+                            </span>
+            
+                            <span class="half">
+                                <div class="input-group">
+                                    <select id="status" required class="sel input-select" name="status">
+                                        <option></option>
+                                    </select>
+                                    <label for="status" class="input-label unselectable">Status</label>
+                                </div>
+                                
+                            </span>
+                        </span>
+            
+                        <span class="row column-gap">    
+                            <span class="half">
+                                <div class="input-group">
+                                    <select id="color" name="color" required class="sel input-select">
+                                        <option></option>
+                                        <!-- <option value="red">Red</option>
+                                        <option value="blue" selected="selected">Blue</option>
+                                        <option value="green">Green</option>
+                                        <option value="orange">Orange</option>
+                                        <option value="yellow">Yellow</option>
+                                        <option value="purple">Purple</option> -->
+                                    </select>
+                                    <label for="color" class="input-label unselectable">Color</label>
+                                </div>
+                            </span>
 
-                <!-- <span class="row full">
-                    <input type="submit" id="submit" value="Submit To Server" method="POST">
-                </span> -->
+                            <span class="half">
+                                <div class="input-group">
+                                    <input id="date" required class="full-width input-area" name="date">
+                                    <label for="date" class="input-label unselectable">Date & Time</label>
+                                </div>
+                            </span>
+                                
+                        </span>
+            
+            
+                        
+            
+            
+                        <span class="row column-gap">
+                            <span class="half">
+                                <button id="submit-btn" type="button">Submit</button>
+                            </span>
+                            <span class="half">
+                                <input type="reset" value="Clear">
+                            </span>
+                        </span>
+
+                        <!-- <span class="row full">
+                            <input type="submit" id="submit" value="Submit To Server" method="POST">
+                        </span> -->
+
+                    </div>
+
+                </form>
 
             </div>
+ 
 
-        </form>
+
+
+            <div id="choose-artist-section" class="nav-section full">
+                <div id="artist-toggle-nav-row" class="row-marginless">
+                    <div id="artist-toggle" class="row justify nav-btn">
+                        <button id="artist-btn" class="nav-square" aria-pressed="false">
+                            <i class="fa-solid fa-user-pen inside-icon"></i>
+                        </button>
+                    </div>
+                    <div id="artist-text" class="nav-text slide-right">
+                        <h2>Choose Artist</h2>
+                    </div>
+                </div>
+    
+                <form id="artist-form" class="sidebar-form">
+                    <h3 class="pod">Other:</h3>
+                      <input type="radio" id="matt" name="other" value="Matt">
+                      <label for="matt">Matt</label><br>
+                      <input type="radio" id="todd" name="other" value="Todd">
+                      <label for="todd">Todd</label><br>
+                      <input type="radio" id="danny" name="other" value="Danny">
+                      <label for="danny">Danny</label>
+                </form>
+              
+    
+    
+            </div>
+           
+            
+
+        </div>
+          
+
+        <!-- <button class="openbtn" onclick="openNav()">&#9776; Open Sidebar</button>
+        <h2>Collapsed Sidebar</h2>
+        <p>Content...</p> -->
+
 
        
         <div id="example-table"></div>

@@ -4,26 +4,102 @@ body {
     font-family: "Roboto", "Arial", "Lucida Grande", sans-serif
 }
 
+.pod {
+    margin: 0;
+}
+
+#artist-form {
+    margin: 0px 15px;
+}
 
 #main {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     /* background-color:aquamarine; */
+    transition: margin-left .5s; /* If you want a transition effect */
+    margin: 8px 15px 8px 15px;
+
+}
+
+.main-sidebar {
+    margin: 8px 15px 8px 100px !important;
+}
+
+.main-sidebar-expanded {
+    margin: 8px 15px 8px 330px !important;
+}
+
+#title {
+    transition: margin-left .5s;
+    margin: 15px 0px;
+}
+
+.title-sidebar {
+    margin-left: 30px !important;
+}
+
+.title-sidebar-expanded {
+    margin-left: 260px !important;
+}
+
+.nav-section {
+    transition: background-color 1s linear;
+    border-radius: 10px;
+    /* padding-bottom: 20px; */
+}
+
+.white-in {
+    background-color: white;
 }
 
 #add-a-project {
     display: flex;
     flex-direction: column;
     width: 300px;
-    margin: 15px 0px;
+    /* margin: 15px 0px; */
     /* background-color: burlywood; */
 }
 
 .row {
     display: flex;
     flex-direction: row;
-    column-gap: 5%;
     margin: 8px 10px;
+}
+
+.row-marginless {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.expanded-section {
+    margin-bottom: 15px;
+}
+
+.nav-btn {
+    margin: 10px 10px;
+    width: 50px;
+}
+
+.nav-square:hover {
+    background-color:#5b93c3;
+    transform: scale(1.1);
+}
+
+.nav-square:active:hover {
+    background-color:#6baae2;
+    transform: scale(1.05);
+}
+
+
+.nav-btn-expand {
+    width: 200px !important;
+    /* padding: 75px 8px 8px 8px; */
+}
+
+
+.column-gap {
+    column-gap: 5%;
 }
 
 .full {
@@ -44,20 +120,6 @@ body {
     width: 31.66%;
 }
 
-#add-project-header {
-    display: flex;
-    flex-direction: row;
-    column-gap: 12px;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-#add-project-icon {
-    font-size: 22pt;
-    color: #67ACE6;
-}
-
 .custom-header {
     font-weight: 900;
     font-size: 18pt;
@@ -68,6 +130,197 @@ body {
 .full-width {
     width: 100%;
 }
+
+
+.justify {
+    justify-content: center;
+}
+
+/* #add-project-icon {
+    width: 50px;
+} */
+
+
+.nav-text {
+    display: none;
+    margin-left: 10px;
+}
+
+
+
+/* #add-project-text .animate {
+    animation: slide-in 0.7s both;
+}
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateY(-1000px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  } */
+
+.sidebar-form {
+    display: none; 
+    padding-bottom: 20px;
+}
+
+#add-project-header {
+    display: flex;
+    flex-direction: row;
+    column-gap: 12px;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.nav-div {
+    display: flex;
+    width: 70px;
+    z-index: 2;
+    justify-content: center;
+    align-items: center;
+    padding-right: 8px;
+}
+
+.nav-icon {
+    font-size: 35pt;
+    color: #67ACE6;
+}
+
+.inside-icon {
+    font-size: 15pt;
+    color: white;
+}
+
+.nav-square {
+    display: flex;
+    background-color: #67ACE6;
+    border-radius: 7px;
+    width: 41px;
+    height: 41px;
+    align-items: center;
+    justify-content: center;
+    border: none;
+}
+
+/* The button used to open the sidebar */
+#nav-toggle {
+    font-size: 30px;
+    cursor: pointer;
+    background-color: transparent;
+    /* background-color: #111; */
+    /* color: white; */
+    /* padding: 10px 15px;
+    border: none; */
+    border-style: none;
+}
+
+#nav-toggle:hover {
+    color: #8f8f8f;
+    font-size: 35px;
+    background-color: transparent;
+}
+
+/* #nav-toggle:focus {
+    color: #cd2e2e;
+    font-size: 32px;
+    background-color: transparent;
+} */
+
+#nav-toggle:active:hover {
+    color: #8f8f8f;
+    font-size: 32px;
+    background-color: transparent;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#spain {
+    transition: margin-left .5s; /* If you want a transition effect */
+    /* padding: 20px; */
+    /* z-index: 2; */
+    background-color: transparent;
+    height: 41px;
+    width: 41px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 7px;
+    }
+
+
+
+/* The sidebar menu */
+.sidebar {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0;
+    left: 0;
+    background-color: lightgrey; /*#022A42;*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding: 75px 0px 0px 0px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidebar */
+}
+
+/* .sidebar-collapse {
+    width: 0;
+    padding: 85px 0px 0px 0px;
+} */
+
+.sidebar-expand {
+    width: 70px;
+    padding: 75px 8px 8px 8px;
+}
+
+.sidebar-expand-more {
+    width: 300px !important;
+    padding: 75px 8px 8px 8px;
+}
+
+/* The sidebar links */
+.sidebar a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidebar .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+  
+
+  
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {padding-top: 15px;}
+    .sidebar a {font-size: 18px;}
+}
+
+
+
+
+
+
+
+
+
+
 
 .input-group {
     position: relative;
@@ -219,3 +472,124 @@ select :hover {
     text-overflow: ellipsis !important;
     background-color: white;
 }
+
+
+
+
+.slide-right {
+    overflow: hidden;
+    max-width: 300px
+  }
+  
+
+  .slide-right h2 {
+    animation: 0.5s slide-right 0s forwards;
+      transform:translateX(-100%);
+  }
+  
+  @keyframes slide-right {
+    to {
+      transform:translateX(0);
+    }
+  }
+
+
+
+  .slide-left {
+    overflow: hidden;
+    max-width: 300px;
+  }
+
+  .slide-left h2 {
+    animation: 0.5s slide-left 0s forwards;
+  }
+  
+  @keyframes slide-left {
+    to {
+      transform: translateX(-100%);
+    }
+    /* 50.001% {
+      opacity: 0;
+      transform: translateX(100vw);
+    }
+    50.002% {
+      opacity: 1;
+      transform: translateX(100vw);
+    }
+    100% {
+      transform: translateX(0);
+    } */
+  }
+
+  /* .slide-left {
+    overflow: hidden;
+    margin-left: 10px;
+    max-width: 300px
+  }
+
+  .slide-left h2 {
+    animation: 0.5s slide-right 0s backwards;
+      transform:translateX(-100%);
+  }
+  
+  @keyframes slide-left {
+    to {
+      transform:translateX(-100);
+      display: none;
+    }
+  } */
+/* 
+  #add-project-nav-row {
+    align-items: center;
+  } */
+
+  /* .slide-down {
+    overflow: hidden;
+    max-width: 300px
+  }
+
+
+  .slide-down form {
+    animation: 0.5s slide-down 0s downwards;
+      transform:translateY(-100%);
+  }
+  
+  @keyframes slide-down {
+    to {
+      transform:translateY(0);
+    }
+  } */
+
+
+  /* #add-project-form .animate {
+    animation: slide-in 0.7s both;
+}
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateY(-1000px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  } */
+
+
+  /* .hidden {
+    height:0px;
+       -webkit-transition:height, 0.5s linear;
+    -moz-transition: height, 0.5s linear;
+    -ms-transition: height, 0.5s linear;
+    -o-transition: height, 0.5s linear;
+    transition: height, 0.5s linear;
+}
+
+
+.open {
+    height:200px;
+ -webkit-transition:height, 0.5s linear;
+-moz-transition: height, 0.5s linear;
+-ms-transition: height, 0.5s linear;
+-o-transition: height, 0.5s linear;
+transition: height, 0.5s linear;
+} */

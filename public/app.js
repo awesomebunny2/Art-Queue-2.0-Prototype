@@ -1,3 +1,190 @@
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+// function openNav() {
+//     document.getElementById("mySidebar").style.width = "75px";
+//     document.getElementById("main").style.marginLeft = "75px";
+//   }
+  
+//   /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+//   function closeNav() {
+//     document.getElementById("mySidebar").style.width = "0";
+//     document.getElementById("main").style.marginLeft = "0";
+//   }
+
+ $("#nav-toggle").on("click", () => {
+
+    let isPressed = $("#nav-toggle").attr("aria-pressed");
+
+    if (isPressed == "true") {
+
+        $("#mySidebar").removeClass("sidebar-expand");
+        $("#title").removeClass("title-sidebar");
+        $("#main").removeClass("main-sidebar");
+        $("#nav-toggle").attr("aria-pressed", "false");
+
+    } else {
+
+        $("#mySidebar").addClass("sidebar-expand");
+        $("#title").addClass("title-sidebar");
+        $("#main").addClass("main-sidebar");
+        $("#nav-toggle").attr("aria-pressed", "true");
+
+    }
+ });
+
+
+ $("#add-project-btn").on("click", () => {
+    console.log("PROJECT TO ADD!!");
+
+    let isPressed = $("#add-project-btn").attr("aria-pressed");
+
+    if (isPressed == "true") {
+
+
+        $("#add-project-text").removeClass("slide-right");
+        $("#add-project-section").removeClass("white-in");
+        $("#add-project-btn").attr("aria-pressed", "false");
+
+        slideDownForm($("#add-project-form"));
+
+
+        $("#add-project-section").removeClass("expanded-section");
+
+
+        setTimeout(() => {
+            $("#add-project-text").addClass("slide-left");
+        },600);
+
+        if (!$("#choose-artist-section").hasClass("expanded-section")) {
+            setTimeout(() => {
+                $("#mySidebar").removeClass("sidebar-expand-more");
+                $("#main").removeClass("main-sidebar-expanded");
+                $("#title").removeClass("title-sidebar-expanded");
+            },700)
+        };
+
+        setTimeout(() => {
+            $("#add-project-text").css("display", "none");
+        },1000);
+
+    } else {
+
+        $("#main").addClass("main-sidebar-expanded");
+        $("#title").addClass("title-sidebar-expanded");
+
+
+        $("#add-project-text").removeClass("slide-left");
+        $("#add-project-text").addClass("slide-right");
+        $("#add-project-btn").attr("aria-pressed", "true");
+        $("#add-project-section").addClass("white-in");
+
+        $("#mySidebar").addClass("sidebar-expand-more");
+
+ 
+        setTimeout(() => {
+
+            $("#add-project-text").css("display", "flex");
+
+        },175)
+
+
+        setTimeout(() => {
+
+            slideDownForm($("#add-project-form"));
+            $("#add-project-section").addClass("expanded-section");
+
+        },600);
+
+    };
+});
+
+
+
+$("#artist-btn").on("click", () => {
+    console.log("ARTIST UPDATED!!");
+
+    let isPressed = $("#artist-btn").attr("aria-pressed");
+
+    if (isPressed == "true") {
+
+
+        $("#artist-text").removeClass("slide-right");
+        $("#choose-artist-section").removeClass("white-in");
+        $("#artist-btn").attr("aria-pressed", "false");
+
+        slideDownForm($("#artist-form"));
+
+        $("#choose-artist-section").removeClass("expanded-section");
+
+
+        setTimeout(() => {
+            $("#artist-text").addClass("slide-left");
+        },600);
+
+        if (!$("#add-project-section").hasClass("expanded-section")) {
+
+            setTimeout(() => {
+                $("#mySidebar").removeClass("sidebar-expand-more");
+                $("#main").removeClass("main-sidebar-expanded");
+                $("#title").removeClass("title-sidebar-expanded");
+            },700)
+
+        };
+
+        setTimeout(() => {
+            $("#artist-text").css("display", "none");
+        },1000);
+
+    } else {
+
+        $("#main").addClass("main-sidebar-expanded");
+        $("#title").addClass("title-sidebar-expanded");
+
+
+        $("#artist-text").removeClass("slide-left");
+        $("#artist-text").addClass("slide-right");
+        $("#artist-btn").attr("aria-pressed", "true");
+        $("#choose-artist-section").addClass("white-in");
+
+        $("#mySidebar").addClass("sidebar-expand-more");
+
+    
+        setTimeout(() => {
+
+            $("#artist-text").css("display", "flex");
+
+        },175)
+        
+
+        setTimeout(() => {
+
+            slideDownForm($("#artist-form"));
+
+            $("#choose-artist-section").addClass("expanded-section");
+        
+        },600);
+
+    };
+});
+
+
+
+
+
+
+
+
+
+
+ function slideDownForm(form) {
+    if (form.is( ":hidden" ) ) {
+        form.slideDown( 500 );
+      } else {
+        form.slideUp( 500 );
+      }
+}
+
+
+
 /**
  * A custom date picker (flatpickr) that works across platforms
  * @param {Cell Component} cell the current cell component in the Tabulator table (automatically loaded)
