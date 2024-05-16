@@ -1,5 +1,10 @@
 [{
-    "artists": ["Matt", "Todd", "Danny"],
+    "artists": [
+        { "artist": "Matt", "POD": "Other" },
+        { "artist": "Todd", "POD": "Other" },
+        { "artist": "Danny", "POD": "Other" }
+    ],
+    "PODs": ["Peter", "Luke", "Emily", "Other"],
     "statuses": ["Not Started", "Working", "At Client", "On Hold", "Completed", "Cancelled"],
     "colors": ["Red", "Blue", "Green", "Orange", "Yellow", "Purple"]
 }]

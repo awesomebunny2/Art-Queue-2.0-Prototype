@@ -4,6 +4,24 @@ body {
     font-family: "Roboto", "Arial", "Lucida Grande", sans-serif
 }
 
+#nav-title {
+    display: none;
+    width: 0px;
+    height: 60px;
+    z-index: 2;
+    position: relative;
+    right: 20px;
+}
+
+.classic {
+    width: 300px;
+    object-fit: cover;
+}
+
+.no-overflow {
+    overflow: visible !important;
+}
+
 .pod {
     margin: 0;
 }
@@ -493,6 +511,17 @@ select :hover {
     }
   }
 
+  .slide-right img {
+    animation: 0.5s slide-right 0s forwards;
+      transform:translateX(-100%);
+  }
+  
+  @keyframes slide-right {
+    to {
+      transform:translateX(0);
+    }
+  }
+
 
 
   .slide-left {
@@ -508,17 +537,16 @@ select :hover {
     to {
       transform: translateX(-100%);
     }
-    /* 50.001% {
-      opacity: 0;
-      transform: translateX(100vw);
+  }
+
+  .slide-left img {
+    animation: 0.5s slide-left 0s forwards;
+  }
+  
+  @keyframes slide-left {
+    to {
+      transform: translateX(-100%);
     }
-    50.002% {
-      opacity: 1;
-      transform: translateX(100vw);
-    }
-    100% {
-      transform: translateX(0);
-    } */
   }
 
   /* .slide-left {

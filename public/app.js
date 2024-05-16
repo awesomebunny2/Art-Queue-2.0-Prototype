@@ -1,14 +1,3 @@
-/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
-// function openNav() {
-//     document.getElementById("mySidebar").style.width = "75px";
-//     document.getElementById("main").style.marginLeft = "75px";
-//   }
-  
-//   /* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
-//   function closeNav() {
-//     document.getElementById("mySidebar").style.width = "0";
-//     document.getElementById("main").style.marginLeft = "0";
-//   }
 
  $("#nav-toggle").on("click", () => {
 
@@ -47,6 +36,7 @@
         slideDownForm($("#add-project-form"));
 
 
+
         $("#add-project-section").removeClass("expanded-section");
 
 
@@ -55,8 +45,12 @@
         },600);
 
         if (!$("#choose-artist-section").hasClass("expanded-section")) {
+
+            $("#nav-title").slideUp( 500 );
+
             setTimeout(() => {
                 $("#mySidebar").removeClass("sidebar-expand-more");
+                $("#nav-title").css("display", "none");
                 $("#main").removeClass("main-sidebar-expanded");
                 $("#title").removeClass("title-sidebar-expanded");
             },700)
@@ -74,10 +68,14 @@
 
         $("#add-project-text").removeClass("slide-left");
         $("#add-project-text").addClass("slide-right");
+        if ($("#nav-title").is( ":hidden" ) ) {
+            $("#nav-title").slideDown( 500 );
+        };
         $("#add-project-btn").attr("aria-pressed", "true");
         $("#add-project-section").addClass("white-in");
 
         $("#mySidebar").addClass("sidebar-expand-more");
+        $("#nav-title").css("display", "flex");
 
  
         setTimeout(() => {
@@ -113,17 +111,22 @@ $("#artist-btn").on("click", () => {
 
         slideDownForm($("#artist-form"));
 
+
         $("#choose-artist-section").removeClass("expanded-section");
 
 
         setTimeout(() => {
             $("#artist-text").addClass("slide-left");
+
         },600);
 
         if (!$("#add-project-section").hasClass("expanded-section")) {
 
+            $("#nav-title").slideUp( 500 );
+
             setTimeout(() => {
                 $("#mySidebar").removeClass("sidebar-expand-more");
+                $("#nav-title").css("display", "none");
                 $("#main").removeClass("main-sidebar-expanded");
                 $("#title").removeClass("title-sidebar-expanded");
             },700)
@@ -142,10 +145,15 @@ $("#artist-btn").on("click", () => {
 
         $("#artist-text").removeClass("slide-left");
         $("#artist-text").addClass("slide-right");
+        if ($("#nav-title").is( ":hidden" ) ) {
+            $("#nav-title").slideDown( 500 );
+        };  
         $("#artist-btn").attr("aria-pressed", "true");
         $("#choose-artist-section").addClass("white-in");
 
         $("#mySidebar").addClass("sidebar-expand-more");
+
+        $("#nav-title").css("display", "flex");
 
     
         setTimeout(() => {
@@ -182,6 +190,15 @@ $("#artist-btn").on("click", () => {
         form.slideUp( 500 );
       }
 }
+
+
+//  function slideDownImg(img) {
+//     if (img.is( ":hidden" ) ) {
+//         img.slideDown( 500 );
+//       } else {
+//         img.slideUp( 500 );
+//       }
+// }
 
 
 
@@ -232,7 +249,9 @@ $("#date").flatpickr({
 
 
 function passArtistValue() { 
-    var input1Value = $("#artist-select").val();
+    // var input1Value = $("#artist-select").val();
+    let input1Value = $("input[name='Other']:checked").val();
+
     $("#artist-hidden").val(input1Value); 
 };
 
@@ -250,6 +269,7 @@ $(async() => {
     let storedValuesResponse = await fetch("/getStoredValues");
     let storedValues = await storedValuesResponse.json(); //await the response
 
+    updateTaskpaneElements(storedValues);
 
     //initialize table
     buildArtistTabulator(storedValues);
@@ -257,7 +277,6 @@ $(async() => {
     //load in the artist data
     getArtistTable();
     passArtistValue();
-    updateTaskpaneElements(storedValues);
 
 
 });
@@ -265,11 +284,12 @@ $(async() => {
 
 function updateTaskpaneElements(storedValues) {
 
-    $("#artist-select").empty();
+    // $("#artist-select").empty();
     $("#status").empty();
     $("#color").empty();
 
-    createOptions(storedValues[0].artists, "#artist-select");
+
+    createRadios(storedValues[0].artists, "#artist-form");
 
 
     $("#status").append($("<option disabled selected hidden></option>").val("").text(""));
@@ -280,6 +300,27 @@ function updateTaskpaneElements(storedValues) {
     createOptions(storedValues[0].colors, "#color");
 
 
+
+    function createRadios(arr, element) {
+
+        let i = 0;
+        for (let item of arr) {
+
+            let option;
+
+            if (i == 0) {
+                option = `<input type="radio" id="${item.artist}" name="${item.POD}" value="${item.artist}" checked>`;
+            } else {
+                option = `<input type="radio" id="${item.artist}" name="${item.POD}" value="${item.artist}">`;
+            };
+
+            let label = `<label for="${item.artist}">${item.artist}</label><br>`;
+            $(element).append(option);
+            $(element).append(label);
+
+            i++;
+        };
+    };
 
 
     function createOptions(arr, element) {
@@ -293,19 +334,33 @@ function updateTaskpaneElements(storedValues) {
 };
 
 
+// $("input[name='Other']").on("change", () => {
+//     console.log("Artist Selection changed!!!");
 
+// })
 
+// $("input[type=radio][name=Other]").on("change", () => {
+//     console.log("Artist Selection changed!!!");
+// });
 
-/**
- * On Artist Select Change, do the following
- */
-$("#artist-select").on("change", () => {
+$("#artist-form").on("change", () => {
 
     //load in the artist data
     getArtistTable();
     passArtistValue();
+       
+ });
+
+// /**
+//  * On Artist Select Change, do the following
+//  */
+// $("#artist-select").on("change", () => {
+
+//     //load in the artist data
+//     getArtistTable();
+//     passArtistValue();
    
-});
+// });
 
 
 $("#submit-btn").on("click", async() => {
@@ -404,7 +459,11 @@ $("#submit-btn").on("click", async() => {
 async function getArtistTable() {
 
     //gets value of artist select box
-    let artistName = $("#artist-select").val();
+    // let artistName = $("#artist-select").val();
+    let artistName = $("input[name='Other']:checked").val();
+
+    $("#title").text(`${artistName}'s Queue`);
+
 
     //builds out the POST request object
     let packet = {
@@ -476,7 +535,7 @@ function buildArtistTabulator(storedValues) {
     }
 
     for (let artist of storedValues[0].artists) {
-        artistList.values.push(artist);
+        artistList.values.push(artist.artist);
     }
 
     let colors = {
@@ -486,9 +545,6 @@ function buildArtistTabulator(storedValues) {
     for (let color of storedValues[0].colors) {
         colors.values.push(color);
     }
-
-
-
 
     const table = new Tabulator("#example-table", {
         // autoColumns:true, //create columns from data field names
